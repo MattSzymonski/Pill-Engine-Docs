@@ -1,7 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `crates\pill_engine\src\ecs\components\deferred_update_component.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>deferred_update_component.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../pill_engine/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `crates\pill_engine\src\ecs\components\deferred_update_component.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>deferred_update_component.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><script defer src="../../../../main.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../pill_engine/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -258,8 +256,7 @@
 <span id="255">255</span>
 <span id="256">256</span>
 <span id="257">257</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_assignments</span>)]</span>
+</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_assignments</span>)]</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">engine::Engine</span>,
@@ -280,7 +277,7 @@
 <span class="comment">// --- Request Trait ---</span>
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">DeferredUpdateRequest</span>: <span class="ident">Send</span> {
-    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Engine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Engine</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 }
 
 <span class="comment">// --- Resource Request ---</span>
@@ -295,7 +292,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DeferredUpdateResourceRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> 
     <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Resource</span><span class="op">&lt;</span><span class="ident">Storage</span> <span class="op">=</span> <span class="ident">ResourceStorage</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
 {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">resource_handle</span>: <span class="ident">T::Handle</span>, <span class="ident">request_variant</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">resource_handle</span>: <span class="ident">T::Handle</span>, <span class="ident">request_variant</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">resource_handle</span>,
             <span class="ident">request_variant</span>,
@@ -306,11 +303,11 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DeferredUpdateRequest</span> <span class="kw">for</span> <span class="ident">DeferredUpdateResourceRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> 
     <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Resource</span><span class="op">&lt;</span><span class="ident">Storage</span> <span class="op">=</span> <span class="ident">ResourceStorage</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
 {
-    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Engine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Engine</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="comment">// Get resource slot (it may happen that this resource was deleted, if so then just continue)</span>
         <span class="kw">let</span> <span class="ident">resource_slot</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">engine</span>.<span class="ident">resource_manager</span>.<span class="ident">get_resource_slot_mut</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">resource_handle</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">v</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Ok</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>,
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(()),
         };
         
         <span class="comment">// Take resource from slot</span>
@@ -324,7 +321,7 @@
         <span class="kw">let</span> <span class="ident">resource_slot</span> <span class="op">=</span> <span class="ident">engine</span>.<span class="ident">resource_manager</span>.<span class="ident">get_resource_slot_mut</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">resource_handle</span>).<span class="ident">expect</span>(<span class="string">&quot;Critical: Resource not registered&quot;</span>);
         
         <span class="comment">// Put resource back to slot</span>
-        <span class="ident">resource_slot</span>.<span class="ident">insert</span>(<span class="ident">resource</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">resource_slot</span>.<span class="ident">insert</span>(<span class="ident">resource</span>);
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -344,7 +341,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DeferredUpdateComponentRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> 
     <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Component</span><span class="op">&lt;</span><span class="ident">Storage</span> <span class="op">=</span> <span class="ident">ComponentStorage</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
 {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">entity_handle</span>: <span class="ident">EntityHandle</span>, <span class="ident">scene_handle</span>: <span class="ident">SceneHandle</span>, <span class="ident">request_variant</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">entity_handle</span>: <span class="ident">EntityHandle</span>, <span class="ident">scene_handle</span>: <span class="ident">SceneHandle</span>, <span class="ident">request_variant</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">entity_handle</span>,
             <span class="ident">scene_handle</span>,
@@ -357,7 +354,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DeferredUpdateRequest</span> <span class="kw">for</span> <span class="ident">DeferredUpdateComponentRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> 
     <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Component</span><span class="op">&lt;</span><span class="ident">Storage</span> <span class="op">=</span> <span class="ident">ComponentStorage</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
 {
-    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Engine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Engine</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">component</span> <span class="op">=</span> <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="ident">::None</span>;
         
         {
@@ -388,7 +385,7 @@
             <span class="kw">let</span> <span class="ident">component_slot</span> <span class="op">=</span> <span class="ident">component_storage</span>.<span class="ident">data</span>.<span class="ident">get_mut</span>(<span class="self">self</span>.<span class="ident">entity_handle</span>.<span class="ident">data</span>().<span class="ident">index</span> <span class="kw">as</span> <span class="ident">usize</span>).<span class="ident">unwrap</span>();
         
             <span class="comment">// Put component back to slot</span>
-            <span class="ident">component_slot</span>.<span class="ident">insert</span>(<span class="ident">component</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>());
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">component_slot</span>.<span class="ident">insert</span>(<span class="ident">component</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>());
         }
 
         <span class="prelude-val">Ok</span>(())
@@ -407,7 +404,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DeferredUpdateGlobalComponentRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> 
     <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">GlobalComponent</span><span class="op">&lt;</span><span class="ident">Storage</span> <span class="op">=</span> <span class="ident">GlobalComponentStorage</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
 {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">request_variant</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">request_variant</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">request_variant</span>,
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -418,7 +415,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DeferredUpdateRequest</span> <span class="kw">for</span> <span class="ident">DeferredUpdateGlobalComponentRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> 
     <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">GlobalComponent</span><span class="op">&lt;</span><span class="ident">Storage</span> <span class="op">=</span> <span class="ident">GlobalComponentStorage</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
 {
-    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Engine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">process</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Engine</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">component</span> <span class="op">=</span> <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="ident">::None</span>;
         
         {
@@ -426,7 +423,7 @@
             <span class="kw">let</span> <span class="ident">component_storage</span> <span class="op">=</span> <span class="ident">engine</span>.<span class="ident">global_components</span>.<span class="ident">get_mut</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;Critical: Component not registered&quot;</span>);
 
             <span class="comment">// Get component slot</span>
-            <span class="kw">let</span> <span class="ident">component_slot</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">component_storage</span>.<span class="ident">data</span>;
+            <span class="kw">let</span> <span class="ident">component_slot</span> <span class="op">=</span> <span class="kw-2">&amp;mut</span> <span class="ident">component_storage</span>.<span class="ident">data</span>;
         
             <span class="comment">// Take component from slot</span>
             <span class="ident">component</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">component_slot</span>.<span class="ident">take</span>().<span class="ident">expect</span>(<span class="string">&quot;Critical: Component is None&quot;</span>));
@@ -440,10 +437,10 @@
             <span class="kw">let</span> <span class="ident">component_storage</span> <span class="op">=</span> <span class="ident">engine</span>.<span class="ident">global_components</span>.<span class="ident">get_mut</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;Critical: Component not registered&quot;</span>);
 
             <span class="comment">// Get component slot</span>
-            <span class="kw">let</span> <span class="ident">component_slot</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">component_storage</span>.<span class="ident">data</span>;
+            <span class="kw">let</span> <span class="ident">component_slot</span> <span class="op">=</span> <span class="kw-2">&amp;mut</span> <span class="ident">component_storage</span>.<span class="ident">data</span>;
         
             <span class="comment">// Put component back to slot</span>
-            <span class="ident">component_slot</span>.<span class="ident">insert</span>(<span class="ident">component</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>());
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">component_slot</span>.<span class="ident">insert</span>(<span class="ident">component</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>());
         }
 
         <span class="prelude-val">Ok</span>(())
@@ -458,7 +455,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">DeferredUpdateManager</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">request_queue</span>: <span class="prelude-val">Some</span>(<span class="ident">VecDeque</span>::<span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">DeferredUpdateRequest</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::new</span>()),
         }
@@ -470,19 +467,19 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DeferredUpdateManagerPointer</span>(<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">DeferredUpdateManager</span><span class="op">&gt;</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span> <span class="ident">DeferredUpdateManagerPointer</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {  
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {  
         <span class="self">Self</span> { 
             <span class="number">0</span>: <span class="ident">Arc::new</span>(<span class="ident">Mutex::new</span>(<span class="ident">DeferredUpdateManager::new</span>())),
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> { 
             <span class="number">0</span>: <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(),
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">post_update_request</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">request</span>: <span class="kw">impl</span> <span class="ident">DeferredUpdateRequest</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">post_update_request</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">request</span>: <span class="kw">impl</span> <span class="ident">DeferredUpdateRequest</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">deferred_update_manager</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">lock</span>().<span class="ident">expect</span>(<span class="string">&quot;Critical: Mutex is blocked&quot;</span>);
         <span class="kw">let</span> <span class="ident">request_queue</span> <span class="op">=</span> <span class="ident">deferred_update_manager</span>.<span class="ident">request_queue</span>.<span class="ident">as_mut</span>().<span class="ident">expect</span>(<span class="string">&quot;Critical: Queue in None&quot;</span>);
         <span class="ident">request_queue</span>.<span class="ident">push_back</span>(<span class="ident">Box::new</span>(<span class="ident">request</span>));
@@ -496,13 +493,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">DeferredUpdateComponent</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {  
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {  
         <span class="self">Self</span> { 
             <span class="ident">manager</span>: <span class="ident">DeferredUpdateManagerPointer::new</span>(),
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">borrow_deferred_update_manager</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DeferredUpdateManagerPointer</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">borrow_deferred_update_manager</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) -&gt; <span class="ident">DeferredUpdateManagerPointer</span>
     {
         <span class="self">self</span>.<span class="ident">manager</span>.<span class="ident">clone</span>()
     }
@@ -515,6 +512,6 @@
 
 <span class="kw">impl</span> <span class="ident">GlobalComponent</span> <span class="kw">for</span> <span class="ident">DeferredUpdateComponent</span> {
    
-}</pre></div>
+}</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="pill_engine" data-search-index-js="../../../../search-index.js" data-search-js="../../../../search.js"></div>
-    <script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script></body></html>
+</body></html>

@@ -1,7 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `crates\pill_engine\src\ecs\components\mesh_rendering_component.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mesh_rendering_component.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../pill_engine/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `crates\pill_engine\src\ecs\components\mesh_rendering_component.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mesh_rendering_component.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><script defer src="../../../../main.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../pill_engine/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -206,8 +204,7 @@
 <span id="203">203</span>
 <span id="204">204</span>
 <span id="205">205</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::{
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">engine::Engine</span>,
     <span class="ident">graphics</span>::{ <span class="ident">RenderQueueKey</span>, <span class="ident">compose_render_queue_key</span> }, 
     <span class="ident">resources</span>::{ <span class="ident">Material</span>, <span class="ident">MaterialHandle</span>, <span class="ident">Mesh</span>, <span class="ident">MeshHandle</span>, <span class="ident">ResourceManager</span> },
@@ -232,23 +229,23 @@
 }
 
 <span class="kw">impl</span> <span class="ident">MeshRenderingComponentBuilder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">component</span>: <span class="ident">MeshRenderingComponent::new</span>(),
         }
     }
     
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mesh</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mesh_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MeshHandle</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mesh</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mesh_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MeshHandle</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">component</span>.<span class="ident">mesh_handle</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">mesh_handle</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">material</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">material_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MaterialHandle</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">material</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">material_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MaterialHandle</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">component</span>.<span class="ident">material_handle</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">material_handle</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MeshRenderingComponent</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) -&gt; <span class="ident">MeshRenderingComponent</span> {
         <span class="self">self</span>.<span class="ident">component</span>
     }
 }
@@ -269,11 +266,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">MeshRenderingComponent</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MeshRenderingComponentBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">builder</span>() -&gt; <span class="ident">MeshRenderingComponentBuilder</span> {
         <span class="ident">MeshRenderingComponentBuilder::default</span>()
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> { 
             <span class="ident">mesh_handle</span>: <span class="prelude-val">None</span>,
             <span class="ident">material_handle</span>: <span class="prelude-val">None</span>,
@@ -284,40 +281,40 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_material</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">material_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MaterialHandle</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_material</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">material_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MaterialHandle</span>) {
         <span class="self">self</span>.<span class="ident">material_handle</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">material_handle</span>.<span class="ident">clone</span>());
         <span class="self">self</span>.<span class="ident">post_deferred_update_request</span>(<span class="ident">DEFERRED_REQUEST_VARIANT_SET_MATERIAL</span>);
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_mesh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mesh_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MeshHandle</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_mesh</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">mesh_handle</span>: <span class="kw-2">&amp;</span><span class="ident">MeshHandle</span>) {
         <span class="self">self</span>.<span class="ident">mesh_handle</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">mesh_handle</span>.<span class="ident">clone</span>());
         <span class="self">self</span>.<span class="ident">post_deferred_update_request</span>(<span class="ident">DEFERRED_REQUEST_VARIANT_SET_MESH</span>);
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_material</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_material</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
         <span class="self">self</span>.<span class="ident">material_handle</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="self">self</span>.<span class="ident">post_deferred_update_request</span>(<span class="ident">DEFERRED_REQUEST_VARIANT_UPDATE_RENDER_QUEUE</span>);
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_mesh</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_mesh</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>) {
         <span class="self">self</span>.<span class="ident">mesh_handle</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         <span class="self">self</span>.<span class="ident">post_deferred_update_request</span>(<span class="ident">DEFERRED_REQUEST_VARIANT_UPDATE_RENDER_QUEUE</span>);
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_material_handle</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">material_handle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MaterialHandle</span><span class="op">&gt;</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_material_handle</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">material_handle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MaterialHandle</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">material_handle</span> <span class="op">=</span> <span class="ident">material_handle</span>;
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_mesh_handle</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mesh_handle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MeshHandle</span><span class="op">&gt;</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">set_mesh_handle</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">mesh_handle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MeshHandle</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">mesh_handle</span> <span class="op">=</span> <span class="ident">mesh_handle</span>;
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">update_render_queue_key</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resource_manager</span>: <span class="kw-2">&amp;</span><span class="ident">ResourceManager</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">update_render_queue_key</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">resource_manager</span>: <span class="kw-2">&amp;</span><span class="ident">ResourceManager</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">mesh_handle</span>.<span class="ident">is_some</span>() {
             <span class="comment">// Use default material if no material is set</span>
             <span class="kw">let</span> <span class="ident">material_handle</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">material_handle</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">v</span>,
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">DEFAULT_MATERIAL_HANDLE</span>,
+                <span class="prelude-val">Some</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>,
+                <span class="prelude-val">None</span> =&gt; <span class="ident">DEFAULT_MATERIAL_HANDLE</span>,
             };
 
             <span class="comment">// Compose render queue key and set it</span>
@@ -337,7 +334,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">post_deferred_update_request</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">request_variant</span>: <span class="ident">usize</span>) {
+    <span class="kw">fn</span> <span class="ident">post_deferred_update_request</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">request_variant</span>: <span class="ident">usize</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">deferred_update_manager</span>.<span class="ident">is_some</span>() {
             <span class="kw">let</span> <span class="ident">entity_handle</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">entity_handle</span>.<span class="ident">expect</span>(<span class="string">&quot;Critical: Cannot post deferred update request. No EntityHandle set in Component&quot;</span>);
             <span class="kw">let</span> <span class="ident">scene_handle</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scene_handle</span>.<span class="ident">expect</span>(<span class="string">&quot;Critical: Cannot post deferred update request. No SceneHandle set in Component&quot;</span>);
@@ -352,7 +349,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="ident">MeshRenderingComponent</span> {
-    <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Engine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">initialize</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Engine</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="comment">// This component is using DeferredUpdateSystem so keep DeferredUpdateManager</span>
         <span class="kw">let</span> <span class="ident">deferred_update_component</span> <span class="op">=</span> <span class="ident">engine</span>.<span class="ident">get_global_component_mut</span>::<span class="op">&lt;</span><span class="ident">DeferredUpdateComponent</span><span class="op">&gt;</span>().<span class="ident">expect</span>(<span class="string">&quot;Critical: No DeferredUpdateComponent&quot;</span>);
         <span class="self">self</span>.<span class="ident">deferred_update_manager</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">deferred_update_component</span>.<span class="ident">borrow_deferred_update_manager</span>());
@@ -375,14 +372,14 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">pass_handles</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">self_scene_handle</span>: <span class="ident">SceneHandle</span>, <span class="ident">self_entity_handle</span>: <span class="ident">EntityHandle</span>) {
+    <span class="kw">fn</span> <span class="ident">pass_handles</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">self_scene_handle</span>: <span class="ident">SceneHandle</span>, <span class="ident">self_entity_handle</span>: <span class="ident">EntityHandle</span>) {
         <span class="self">self</span>.<span class="ident">scene_handle</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">self_scene_handle</span>);
         <span class="self">self</span>.<span class="ident">entity_handle</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">self_entity_handle</span>);
     }
 
-    <span class="kw">fn</span> <span class="ident">deferred_update</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Engine</span>, <span class="ident">request</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> { 
+    <span class="kw">fn</span> <span class="ident">deferred_update</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">engine</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Engine</span>, <span class="ident">request</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> { 
         <span class="kw">match</span> <span class="ident">request</span> {
-            <span class="ident">DEFERRED_REQUEST_VARIANT_SET_MATERIAL</span> <span class="op">=</span><span class="op">&gt;</span> 
+            <span class="ident">DEFERRED_REQUEST_VARIANT_SET_MATERIAL</span> =&gt; 
             {
                 <span class="comment">// Check if material handle is valid</span>
                 <span class="ident">engine</span>.<span class="ident">get_resource</span>::<span class="op">&lt;</span><span class="ident">Material</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">material_handle</span>.<span class="ident">unwrap</span>())
@@ -390,7 +387,7 @@
                 
                 <span class="self">self</span>.<span class="ident">update_render_queue_key</span>(<span class="kw-2">&amp;</span><span class="ident">engine</span>.<span class="ident">resource_manager</span>)<span class="question-mark">?</span>;
             },
-            <span class="ident">DEFERRED_REQUEST_VARIANT_SET_MESH</span> <span class="op">=</span><span class="op">&gt;</span>
+            <span class="ident">DEFERRED_REQUEST_VARIANT_SET_MESH</span> =&gt;
             {
                 <span class="comment">// Check if mesh handle is valid</span>
                 <span class="ident">engine</span>.<span class="ident">get_resource</span>::<span class="op">&lt;</span><span class="ident">Mesh</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">mesh_handle</span>.<span class="ident">unwrap</span>())
@@ -398,12 +395,12 @@
 
                 <span class="self">self</span>.<span class="ident">update_render_queue_key</span>(<span class="kw-2">&amp;</span><span class="ident">engine</span>.<span class="ident">resource_manager</span>)<span class="question-mark">?</span>;
             },
-            <span class="ident">DEFERRED_REQUEST_VARIANT_UPDATE_RENDER_QUEUE</span> <span class="op">=</span><span class="op">&gt;</span> 
+            <span class="ident">DEFERRED_REQUEST_VARIANT_UPDATE_RENDER_QUEUE</span> =&gt; 
             {
                 <span class="comment">// Update mesh rendering queue</span>
                 <span class="self">self</span>.<span class="ident">update_render_queue_key</span>(<span class="kw-2">&amp;</span><span class="ident">engine</span>.<span class="ident">resource_manager</span>)<span class="question-mark">?</span>;
             },
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> 
+            <span class="kw">_</span> =&gt; 
             {
                 <span class="macro">panic!</span>(<span class="string">&quot;Critical: Processing deferred update request with value {} in {} failed. Handling is not implemented&quot;</span>, <span class="ident">request</span>, <span class="ident">get_type_name</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>().<span class="ident">sobj_style</span>());
             }
@@ -411,6 +408,6 @@
 
         <span class="prelude-val">Ok</span>(()) 
     }
-}</pre></div>
+}</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="pill_engine" data-search-index-js="../../../../search-index.js" data-search-js="../../../../search.js"></div>
-    <script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script></body></html>
+</body></html>
