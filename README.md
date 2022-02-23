@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="https://github.com/MattSzymonski/Pill-Engine/blob/main/media/pill_logo_horizontal.png" img width=65%>
+  <img src="https://github.com/MattSzymonski/Pill-Engine/blob/main/media/logo/pill_logo_horizontal.png" img width=65%>
 </p>
 
 Documentation of [Pill Engine](https://github.com/MattSzymonski/Pill-Engine "Pill Engine") - data-driven game engine written in Rust
@@ -13,5 +13,5 @@ Documentation containing Pill Engine API and description of types and functions 
 Documentation containing description of every type and function in Pill Engine
 
 <p align="center">
-  <img src="https://github.com/MattSzymonski/Pill-Engine/blob/main/media/pill_pile.png" img width=100%>
+  <img src="https://github.com/MattSzymonski/Pill-Engine/blob/main/media/logo/pill_pile.png" img width=100%>
 </p>
